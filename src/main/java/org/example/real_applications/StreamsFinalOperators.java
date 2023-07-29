@@ -3,6 +3,7 @@ package org.example.real_applications;
 import org.example.util.Database;
 import org.example.util.Videogame;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -16,7 +17,11 @@ public class StreamsFinalOperators {
         //anyMatchOperator(videogames);
         //allMatchOperator(videogames);
         //notMatchOperator(videogames);
-        findFirstMatchOperator(videogames);
+        //findFirstMatchOperator(videogames);
+        //findAnyOperator(videogames);
+        //reduceOperator(videogames);
+        //maxOperator(videogames);
+        minOperator(videogames);
     }
 
     static void countOperator(Stream<Videogame> stream){
@@ -46,4 +51,27 @@ public class StreamsFinalOperators {
         var r = stream.findFirst().get();
         System.out.println(r);
     }
+
+    static void findAnyOperator(Stream<Videogame> stream){
+        var r = stream.findAny().get();
+        System.out.println(r);
+    }
+
+    static void reduceOperator(Stream<Videogame> stream){
+        Optional<Integer> r = stream
+                .filter(Videogame::getIsDiscount)
+                .map(Videogame::getTotalSold)
+                .reduce(Integer::sum);
+        System.out.println(r);
+    }
+    static void maxOperator(Stream<Videogame> stream){
+        Optional<Videogame> r = stream.max((a,b)->a.getName().compareTo(b.getName()));
+        System.out.println(r);
+    }
+    static void minOperator(Stream<Videogame> stream){
+        Optional<Videogame> r = stream.min((a,b)->a.getName().compareTo(b.getName()));
+        System.out.println(r);
+    }
+
+
 }
